@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function UserCard({user, displayFormUpdateUser}) {
     return (
-        <div className="card" onClick={()=>{
+        <div className="card"  onClick={()=>{
             displayFormUpdateUser(user)
           }}>
             {user.image ? (

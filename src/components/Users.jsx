@@ -39,8 +39,8 @@ export default function Users(){
             gender: 'Female'
         }
     ])
-    const [formAddUserVisible, setFormAddUserVisible] = useState(false)
     const [userToEdit, setUserToEdit] = useState(null)
+    const [formAddUserVisible, setFormAddUserVisible] = useState(false)
     const addUser = (prenom, nom, age, gender) => {
         const newUser = {
             id: uuidv4(),
@@ -51,15 +51,17 @@ export default function Users(){
         }
 
         setUsers([...users, newUser])
+        hideFormUpdateUser()
     }
-    const displayFormUpdateUser = (table) => {
+    const displayFormUpdateUser = (user) => {
         setFormAddUserVisible(true)
-        setUserToEdit(table)
+        setUserToEdit(user)
     }
     const hideFormUpdateUser = () => {
         setFormAddUserVisible(false)
         setUserToEdit(null)
     }
+
     const updateUser = (userPrenom, userNom, userAge, userGender, id_user) => {
 
         let newUsers = [...users]
@@ -74,7 +76,7 @@ export default function Users(){
     return(
         <div>
             <h1>Liste des Utilisateurs</h1>
-            <div className="d-flex justify-content-end">
+            <div className="d-flex  justify-content-end">
                 <button className="btn btn-primary" onClick={()=>{ setFormAddUserVisible(true) }}>Ajouter un Utilisateur</button>
             </div>
             {formAddUserVisible && <UserFormAdd updateUser={updateUser} userToEdit={userToEdit} addUser={addUser} context={userToEdit === null ? 'add' : 'edit'} hideFormUpdateUser={hideFormUpdateUser} />}

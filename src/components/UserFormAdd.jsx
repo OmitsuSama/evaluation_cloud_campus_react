@@ -1,7 +1,7 @@
-import React, {useState} from "react"
+import React,{useState, useEffect} from 'react'
 
 
-export default function UserFormAdd({addUser, context, hideFormUpdateUser, userToEdit, updateUser}){
+export default function UserFormAdd({addUser, hideFormUpdateUser, context, updateUser, userToEdit}){
 
     const [nom, setNom] = useState(context === 'edit' ? userToEdit.nom : '')
     const [prenom, setPrenom] = useState(context === 'edit' ? userToEdit.prenom : '')
@@ -9,34 +9,22 @@ export default function UserFormAdd({addUser, context, hideFormUpdateUser, userT
     const [gender, setGender] = useState(context === 'edit' ? userToEdit.gender : '')
 
     return(
-        <div className="popup-overlay" onClick={()=>{
-            hideFormUpdateUser()
-        }}>
-            <div onClick={(e)=>{
-                e.stopPropagation()
-            }}
-        className="m-3 border p-3 rounded-3 bg-forms" style={{margin: 'auto', backgroundColor: '#ffffffd6'}}>
+        <div className="popup-overlay">
+            <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}>
                 
                 <h2>Ajout d'un utilisateur</h2>
                 <form onSubmit={(e)=>{
                     e.preventDefault()
-                    if(nom.trim().length === 0){
-                        alert("Veuillez saisir un nom à l'utilisateur."); return
-                    }
                     setNom('')
-
-                    if(prenom.trim().length === 0){
-                        alert("Veuillez saisir un prenom à l'utilisateur."); return
-                    }
                     setPrenom('')
                     setAge('')
                     setGender('')
+
                     if(context === 'add'){
                         addUser(nom, prenom, age, gender)
                     }else{
                         updateUser(nom, prenom, age, gender, userToEdit.id)
                     }
-
                     
                 }}>
                         <div className="form-group">
@@ -60,11 +48,11 @@ export default function UserFormAdd({addUser, context, hideFormUpdateUser, userT
                         </select>
                     </div>
                     <div className="form-group">
-                        <input type="submit" className="btn btn-primary"  value={context === 'edit' ? 'Modifier' : "Ajouter"}/>
+                        <input type="submit" className="btn btn-primary" value={context === 'edit' ? 'Modifier' : "Ajouter"}/>
                     </div>
                 </form>     
                 <button className="btn btn-secondary" onClick={()=>{
-                    setFormAddUserVisible(false)
+                    hideFormUpdateUser(false)
                 }}>Fermer</button>
             </div>       
         </div>
