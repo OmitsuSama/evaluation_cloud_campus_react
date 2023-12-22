@@ -12,7 +12,8 @@ export default function UserCard({user}) {
             )}
             <div className="card-body">
                 <h5 className="card-title">{user.prenom} {user.nom}</h5>
-                <p className="card-text">{user.age}</p>
+                <p className="card-text">Age : {user.age}</p>
+                <p className="card-text">Gender : {user.gender}</p>
             </div>
         </div>
     )
