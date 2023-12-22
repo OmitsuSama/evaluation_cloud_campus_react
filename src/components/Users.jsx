@@ -61,6 +61,11 @@ export default function Users(){
         setFormAddUserVisible(false)
         setUserToEdit(null)
     }
+    const deleteUser = (userId) => {
+        const newUsers = users.filter((user) => user.id !== userId);
+        setUsers(newUsers);
+        hideFormUpdateUser();
+    };
 
     const updateUser = (userPrenom, userNom, userAge, userGender, id_user) => {
 
@@ -79,7 +84,7 @@ export default function Users(){
             <div className="d-flex  justify-content-end">
                 <button className="btn btn-primary" onClick={()=>{ setFormAddUserVisible(true) }}>Ajouter un Utilisateur</button>
             </div>
-            {formAddUserVisible && <UserFormAdd updateUser={updateUser} userToEdit={userToEdit} addUser={addUser} context={userToEdit === null ? 'add' : 'edit'} hideFormUpdateUser={hideFormUpdateUser} />}
+            {formAddUserVisible && <UserFormAdd updateUser={updateUser} deleteUser={deleteUser} userToEdit={userToEdit} addUser={addUser} context={userToEdit === null ? 'add' : 'edit'} hideFormUpdateUser={hideFormUpdateUser} />}
             <div className="container mt-4">
                 <div className="row">
                     {users.map((user, index)=>{
