@@ -1,8 +1,10 @@
 import React from 'react'
 
-export default function UserCard({user}) {
+export default function UserCard({user, displayFormUpdateUser}) {
     return (
-        <div className="card">
+        <div className="card" onClick={()=>{
+            displayFormUpdateUser(user)
+          }}>
             {user.image ? (
                 // Si user.image existe, afficher l'image de l'utilisateur
                 <img src={user.image} className="card-img-top" alt="img Ref" />

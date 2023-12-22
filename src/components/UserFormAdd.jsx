@@ -1,16 +1,21 @@
 import React, {useState} from "react"
 
 
-export default function UserFormAdd({addUser, setFormAddUserVisible}){
+export default function UserFormAdd({addUser, context, hideFormUpdateUser, userToEdit, updateUser}){
 
-    const [nom, setNom] = useState('')
-    const [prenom, setPrenom] = useState('')
-    const [age, setAge] = useState('')
-    const [gender, setGender] = useState('')
+    const [nom, setNom] = useState(context === 'edit' ? userToEdit.nom : '')
+    const [prenom, setPrenom] = useState(context === 'edit' ? userToEdit.prenom : '')
+    const [age, setAge] = useState(context === 'edit' ? userToEdit.age : '')
+    const [gender, setGender] = useState(context === 'edit' ? userToEdit.gender : '')
 
     return(
-        <div className="popup-overlay">
-            <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}>
+        <div className="popup-overlay" onClick={()=>{
+            hideFormUpdateUser()
+        }}>
+            <div onClick={(e)=>{
+                e.stopPropagation()
+            }}
+        className="m-3 border p-3 rounded-3 bg-forms" style={{margin: 'auto', backgroundColor: '#ffffffd6'}}>
                 
                 <h2>Ajout d'un utilisateur</h2>
                 <form onSubmit={(e)=>{
@@ -26,8 +31,13 @@ export default function UserFormAdd({addUser, setFormAddUserVisible}){
                     setPrenom('')
                     setAge('')
                     setGender('')
+                    if(context === 'add'){
+                        addUser(nom, prenom, age, gender)
+                    }else{
+                        updateUser(nom, prenom, age, gender, userToEdit.id)
+                    }
 
-                    addUser(nom, prenom, age, gender)
+                    
                 }}>
                         <div className="form-group">
                         <label>Nom</label>
@@ -50,7 +60,7 @@ export default function UserFormAdd({addUser, setFormAddUserVisible}){
                         </select>
                     </div>
                     <div className="form-group">
-                        <input type="submit" className="btn btn-primary" value="Ajouter"/>
+                        <input type="submit" className="btn btn-primary"  value={context === 'edit' ? 'Modifier' : "Ajouter"}/>
                     </div>
                 </form>     
                 <button className="btn btn-secondary" onClick={()=>{

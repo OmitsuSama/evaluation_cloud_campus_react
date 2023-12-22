@@ -40,6 +40,7 @@ export default function Users(){
         }
     ])
     const [formAddUserVisible, setFormAddUserVisible] = useState(false)
+    const [userToEdit, setUserToEdit] = useState(null)
     const addUser = (prenom, nom, age, gender) => {
         const newUser = {
             id: uuidv4(),
@@ -51,19 +52,38 @@ export default function Users(){
 
         setUsers([...users, newUser])
     }
+    const displayFormUpdateUser = (table) => {
+        setFormAddUserVisible(true)
+        setUserToEdit(table)
+    }
+    const hideFormUpdateUser = () => {
+        setFormAddUserVisible(false)
+        setUserToEdit(null)
+    }
+    const updateUser = (userPrenom, userNom, userAge, userGender, id_user) => {
+
+        let newUsers = [...users]
+        let index = newUsers.findIndex(u => u.id === id_user)
+        newUsers[index].prenom = userPrenom
+        newUsers[index].nom = userNom
+        newUsers[index].age = userAge
+        newUsers[index].gender = userGender
+        setUsers(newUsers)
+        hideFormUpdateUser()
+    }
     return(
         <div>
             <h1>Liste des Utilisateurs</h1>
-            <div className="d-flex">
-                <button className="btn btn-success" onClick={()=>{ setFormAddUserVisible(true) }}>Ajouter un Utilisateur</button>
+            <div className="d-flex justify-content-end">
+                <button className="btn btn-primary" onClick={()=>{ setFormAddUserVisible(true) }}>Ajouter un Utilisateur</button>
             </div>
-            {formAddUserVisible && <UserFormAdd addUser={addUser} setFormAddUserVisible={setFormAddUserVisible} />}
+            {formAddUserVisible && <UserFormAdd updateUser={updateUser} userToEdit={userToEdit} addUser={addUser} context={userToEdit === null ? 'add' : 'edit'} hideFormUpdateUser={hideFormUpdateUser} />}
             <div className="container mt-4">
                 <div className="row">
                     {users.map((user, index)=>{
                         return(
                             <div className="col-md-3">
-                                <UserCard key={index} user={user} />
+                                <UserCard key={index} displayFormUpdateUser={displayFormUpdateUser} user={user} />
                             </div>
 
                         )
