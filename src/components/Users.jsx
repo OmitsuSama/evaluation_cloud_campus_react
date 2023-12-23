@@ -37,6 +37,38 @@ export default function Users(){
             nom: 'Kuchiki',
             age: "500",
             gender: 'Female'
+        },
+        {
+            id: '5',
+            image: "/img/choso.jpg",
+            prenom: 'Choso',
+            nom: 'Kamo',
+            age: "150",
+            gender: 'Male'
+        },
+        {
+            id: '6',
+            image: "/img/furina.jpg",
+            prenom: 'Furina',
+            nom: 'De Fontaine',
+            age: "500",
+            gender: 'Female'
+        },
+        {
+            id: '7',
+            image: "/img/nanami.jpg",
+            prenom: 'Kento',
+            nom: 'Nanami',
+            age: "27",
+            gender: 'Male'
+        },
+        {
+            id: '8',
+            image: "/img/hyakimaru.jpg",
+            prenom: 'Hyakimaru',
+            nom: 'Dororo',
+            age: "20",
+            gender: 'Male'
         }
     ])
     const [userToEdit, setUserToEdit] = useState(null)
